@@ -652,7 +652,7 @@ function onEvent(name, value1, value2)
             noteTweenY(
                 'playerLower' .. i,
                 strum,
-                playerWaveY[index],
+                playerWaveY[index]+(getPropertyFromGroup('strumLineNotes', strum, 'height') * direction),
                 TRANSITION_DURATION,
                 'cubeInOut'
             )
