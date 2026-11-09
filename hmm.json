@@ -90,8 +90,7 @@
     {
       "name": "hxvlc",
       "type": "git",
-      "url": "https://github.com/MAJigsaw77/hxvlc.git",
-      "ref": "feat/miniaudio"
+      "url": "https://github.com/MAJigsaw77/hxvlc.git"
     },
     {
       "name": "tink_core",
