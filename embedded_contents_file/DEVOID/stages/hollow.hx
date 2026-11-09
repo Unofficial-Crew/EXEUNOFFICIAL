@@ -1,6 +1,11 @@
 import openfl.display.BlendMode;
 import flixel.tweens.FlxTween.FlxTweenType;
 
+/**
+ * I HATE HSCRIPT-IRIS
+ * IT'S FUCKING PIECE OF BULLSHIT BRUH
+ * RULESCRIPT IS MUCH BETTER
+ */
 final bg:Array<BackgroundSprite> = [
 	{path: 'hollow/sky', position: [-850, -300], scroll: [0.35, 0.35]},
 	{path: 'hollow/cloud1', position: [-800, -300], scroll: [0.35, 0.35], backdrop: ['x', [50, 0]]},
@@ -11,48 +16,6 @@ final bg:Array<BackgroundSprite> = [
 	{path: 'hollow/floor'},
 	{path: 'hollow/fg', position: [300, 300], scroll: [1.2, 1.2], front: true}
 ];
-
-function onCreate()
-{
-	makeBackground(bg);
-
-	var overlay:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF060d94);
-	overlay.alpha = 0.25;
-	overlay.blend = BlendMode.MULTIPLY;
-	overlay.camera = camVideo;
-	add(overlay);
-
-	createBadnickPool();
-}
-
-function onCreatePost()
-{
-	for (i in 0..._trailPoolSize)
-	{
-		var trail:Character = new Character(0, 0, dad.curCharacter, dad.isPlayer);
-		trail.updateHitbox();
-		trail.visible = false;
-		trail.active = false;
-		add(trail);
-		_trails.push(trail);
-		_trailTweens.push(null);
-	}
-}
-
-function onSongStart()
-{
-	_badnicks[0].visible = false;
-}
-
-function opponentNoteHitPre(note)
-{
-	if (_dadHardMode && note.animSuffix == '') note.animSuffix = '-hard';
-}
-
-function opponentNoteHit(note)
-{
-	if (curStep >= 1568 && curStep < 1824) spawnTrail();
-}
 
 final _trailPoolSize:Int = 8;
 var _trails:Array<Character> = [];
@@ -81,6 +44,33 @@ function spawnTrail()
 		trail.active = false;
 		_trailTweens[index] = null;
 	}});
+}
+
+function onCreate()
+{
+	makeBackground(bg);
+
+	var overlay:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF060d94);
+	overlay.alpha = 0.25;
+	overlay.blend = BlendMode.MULTIPLY;
+	overlay.camera = camVideo;
+	add(overlay);
+
+	createBadnickPool();
+}
+
+function onCreatePost()
+{
+	for (i in 0..._trailPoolSize)
+	{
+		var trail:Character = new Character(0, 0, dad.curCharacter, dad.isPlayer);
+		trail.updateHitbox();
+		trail.visible = false;
+		trail.active = false;
+		add(trail);
+		_trails.push(trail);
+		_trailTweens.push(null);
+	}
 }
 
 final _badnickPoolSize:Int = 8;
@@ -114,13 +104,13 @@ function releaseOffscreenBadnicks()
 		badnick.active = false;
 		badnick.velocity.set(0, 0);
 		badnick.acceleration.set(0, 0);
-		if (_badnickTweens[i] != null) _badnickTweens[i].cancel();
+		_badnickTweens[i]?.cancel();
 		_badnickTweens[i] = null;
 	}
 }
 
-var _dadHardMode:Bool = false;
 var _startSpawning:Bool = false;
+var _dadHardMode:Bool = false;
 function onEvent(n, v1)
 {
 	if (n == 'BG Freaks Expression') _dadHardMode = !_dadHardMode;
@@ -155,12 +145,27 @@ function onEvent(n, v1)
 	}
 }
 
+function onSongStart()
+{
+	_badnicks[0]?.visible = false;
+}
+
 function onSectionHit()
 {
 	if (!_startSpawning) return;
 
 	releaseOffscreenBadnicks();
 	if (FlxG.random.bool(25)) spawnBadnick();
+}
+
+function opponentNoteHitPre(note)
+{
+	if (_dadHardMode && note.animSuffix == '') note.animSuffix = '-hard';
+}
+
+function opponentNoteHit(note)
+{
+	if (curStep >= 1568 && curStep < 1824) spawnTrail();
 }
 
 function spawnBadnick()
