@@ -2,6 +2,7 @@ local sentenceIndex = 0
 local sentenceWords = {}
 local wordIndex = 0
 local prevVal1 = nil
+local useAutoSpaces = true
 
 function onCreatePost()
 	makeLuaText('mytext', '', 860)
@@ -21,7 +22,21 @@ function onEvent(n, val1, val2)
 			local key = 'lyrics.prey.' .. sentenceIndex
 			local translated = getSongLyric(key, val1)
 			sentenceWords = {}
-			for w in translated:gmatch('%S+') do table.insert(sentenceWords, w) end
+
+			if translated:find(';') then
+				useAutoSpaces = false
+				for part in (translated .. ';'):gmatch('([^;]*);') do
+					if part ~= '' then
+						table.insert(sentenceWords, part)
+					end
+				end
+			else
+				useAutoSpaces = true
+				for w in translated:gmatch('%S+') do
+					table.insert(sentenceWords, w)
+				end
+			end
+
 			wordIndex = 0
 		end
 
@@ -31,7 +46,9 @@ function onEvent(n, val1, val2)
 
 		local display = ''
 		for i = 1, wordIndex do
-			if i > 1 then display = display .. ' ' end
+			if i > 1 and useAutoSpaces then 
+				display = display .. ' ' 
+			end
 			display = display .. sentenceWords[i]
 		end
 
