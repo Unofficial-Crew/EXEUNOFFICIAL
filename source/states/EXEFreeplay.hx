@@ -294,18 +294,19 @@ class EXEFreeplay extends MusicBeatState
 			WeekData.setDirectoryFromWeek(leWeek);
 
 			final songInfoList:Array<ExeSongInfo> = [];
-			final weekExeTitle:String = (leWeek.exeTitle != null && leWeek.exeTitle.length > 0) ? leWeek.exeTitle : null;
-			final weekExeCover:String = (leWeek.exeCover != null && leWeek.exeCover.length > 0) ? leWeek.exeCover : 'placeholder';
-			final weekExeLabel:String = (leWeek.exeLabel != null && leWeek.exeLabel.length > 0) ? leWeek.exeLabel : 'NON EXE';
-			final weekTransition:String = (leWeek.transitionShape != null && leWeek.transitionShape.length > 0) ? leWeek.transitionShape : 'HEAD';
+			final weekExeTitle:String = Language.get('freeplay.title.${leWeek.exeTitle.toLowerCase().replace(" ", "")}', leWeek.exeTitle);
+			final weekExeCover:String = leWeek.exeCover ?? 'placeholder';
+			final weekExeLabel:String = leWeek.exeLabel ?? 'NON EXE';
+			final weekTransition:String = leWeek.transitionShape ?? 'HEAD';
 
 			for (song in leWeek.songs)
 			{
 				final sName:String = song[0];
-				final title:String = weekExeTitle ?? sName.toUpperCase();
+				final title:String = weekExeTitle.startsWith("freeplay.title.") ? sName.toUpperCase() : weekExeTitle;
 
 				final songPath:String = Paths.formatToSongPath(sName);
 				if (songPath == 'stardust-speedway' && Mods.currentModDirectory == 'STARVED') continue;
+
 				final burningOpen:Bool = backend.BurningBot.active || FlxG.save.data.burningRevealed == true || FlxG.save.data.burningWon == true;
 				if (burningOpen && songPath == 'burning') backend.SongProgress.markOpened(songPath);
 				if (unlocked.indexOf(songPath) == -1 && !opened.contains(songPath) && !(burningOpen && songPath == 'burning') #if !final && !inDevMode #end) continue;
