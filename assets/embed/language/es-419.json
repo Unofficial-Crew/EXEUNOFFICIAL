@@ -95,7 +95,7 @@
 	"parallax.unlock.message": "Vuelve al title screen para entrar al menú.",
 	"parallax.unlock.prompt": "Presiona ENTER para volver al title screen.",
 	"achievement_secondary": "Qué demonios está pasando...", "achievement_description_secondary": "Encuentra todos los códigos secretos",
-	"achievement_sega": "MENSAJE RECIBIDO", "achievement_description_sega": "Recibe una notificación de SEGA Enterprise",
+	"achievement_sega": "MENSAJE RECIBIDO", "achievement_description_sega": "Recibe una notificación de SEGA Enterprises",
 	"achievement_popup": "¡UN POCO DE ORDEN!", "achievement_description_popup": "Supera Fatality sin cerrar ninguna ventana emergente",
 	"achievement_super": "¡Súper Jugador!", "achievement_description_super": "Consigue rango A o superior en 5 canciones",
 	"achievement_hyper": "¡Híper Jugador!!", "achievement_description_hyper": "Consigue rango P en cualquier canción",
